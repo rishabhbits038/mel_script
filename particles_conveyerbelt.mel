@@ -1,0 +1,35 @@
+polySphere -n ball0 -r 0.2 -sa 10 -sh 10;
+select -r ball0;
+for($i=1;$i<=10;$i++){
+    duplicate;
+    move -r .45 0 0;
+}
+
+for($i=0;$i<10;$i++){
+    $str="ball"+$i;
+    select -add $str;
+}
+
+$arr=`ls -sl`;
+
+polyUnite -n row0 $arr;
+
+select row0;
+for($i=0;$i<100;$i++){
+    duplicate;
+    move -r 0 0 0.45;
+}
+
+float $t;
+float $z;
+float $y;
+for($t=0;$t<=300;$t=$t+3.75){
+    for($i=0;$i<100;$i++){
+        $str="row"+$i;
+        select $str;
+        $z=sin(12*$t+150*$i)/5;
+        $y=$i*.45;
+        move  0 $z $y;
+        setKeyframe -at translateY -t $t $str;
+    }
+}
